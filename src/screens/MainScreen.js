@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   TouchableWithoutFeedback,
@@ -8,20 +8,13 @@ import {
   TextInput,
 } from "react-native";
 import { Octicons } from "@expo/vector-icons";
-import { useForm, Controller } from "react-hook-form";
+import RNPickerSelect from "react-native-picker-select";
 
 const MainScreen = ({ navigation }) => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      trelloBoard: "",
-    },
-  });
-
-  const onSubmit = (data) => console.log(data);
+  // States
+  const [trelloBoard, setTrelloBoard] = useState(null);
+  const [trelloList, setTrelloList] = useState(null);
+  const [syncFrom, setSyncFrom] = useState(null);
 
   return (
     <View
@@ -35,26 +28,72 @@ const MainScreen = ({ navigation }) => {
       <View style={styles.cardWrapper}>
         <Text style={styles.cardTitle}>Trello Settings</Text>
         <View style={styles.cardBody}>
-          <Octicons name="sync" size={28} color="black" />
+          {/* Trello Board */}
+          <Text style={styles.optionHeading}>
+            Choose a Trello Board to Sync to:
+          </Text>
+          <RNPickerSelect
+            placeholder={{ label: "Select a Trello board..", value: null }}
+            onValueChange={(value) => setTrelloBoard(value)}
+            items={[
+              { label: "First Item", value: "1" },
+              { label: "Second Item", value: "2" },
+              { label: "Third Item", value: "3" },
+            ]}
+          />
+
+          {/* Trello List */}
+          {trelloBoard === null ? null : (
+            <View
+              style={{
+                paddingTop: 10,
+                borderTopWidth: 1,
+                borderColor: "#e1e1e1",
+              }}
+            >
+              <Text style={styles.optionHeading}>
+                Choose a Trello List to Sync to:
+              </Text>
+              <RNPickerSelect
+                placeholder={{ label: "Select a Trello List..", value: null }}
+                onValueChange={(value) => setTrelloList(value)}
+                items={[
+                  { label: "First Item", value: "1" },
+                  { label: "Second Item", value: "2" },
+                  { label: "Third Item", value: "3" },
+                ]}
+              />
+            </View>
+          )}
         </View>
       </View>
 
       {/* Sync Settings Card */}
-      <View style={styles.cardWrapper}>
-        <Text style={styles.cardTitle}>Sync Settings</Text>
-        <View style={styles.cardBody}>
-          <Octicons name="sync" size={28} color="black" />
+      {trelloList === null ? null : (
+        <View style={styles.cardWrapper}>
+          <Text style={styles.cardTitle}>Sync Settings</Text>
+          <View style={styles.cardBody}>
+            <Text style={styles.optionHeading}>
+              When do you want to sync from?
+            </Text>
+            <RNPickerSelect
+              placeholder={{ label: "Choose option..", value: null }}
+              onValueChange={(value) => setSyncFrom(value)}
+              items={[
+                { label: "Beginning of Time", value: "beginningOfTime" },
+                { label: "From Order Number", value: "fromOrderNumber" },
+              ]}
+            />
+          </View>
         </View>
-      </View>
+      )}
 
       {/* Sync */}
-      <View style={{ paddingTop: 10 }}>
-        <Button
-          title={"Sync Now"}
-          color={"#DB3E00"}
-          onPress={handleSubmit(onSubmit)}
-        />
-      </View>
+      {syncFrom === null ? null : (
+        <View style={{ paddingTop: 10 }}>
+          <Button title={"Sync Now"} color={"#DB3E00"} />
+        </View>
+      )}
 
       {/* Footer */}
       <View
@@ -67,7 +106,7 @@ const MainScreen = ({ navigation }) => {
           justifyContent: "space-between",
           alignItems: "center",
 
-          width: "95%",
+          width: "100%",
           bottom: 0,
 
           borderTopWidth: 1,
@@ -107,12 +146,17 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     padding: 10,
-    backgroundColor: "#d7d7d7",
+    backgroundColor: "#DB3E00",
+    color: "white",
     fontSize: 15,
     fontWeight: "bold",
   },
   cardBody: {
     padding: 10,
+  },
+  optionHeading: {
+    fontSize: 14,
+    color: "#a7a7a7",
   },
 });
 
