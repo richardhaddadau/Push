@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   optionHeading: {
+    marginBottom: 10,
     fontSize: 14,
     color: "#a7a7a7",
   },
