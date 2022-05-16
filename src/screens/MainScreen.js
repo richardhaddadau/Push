@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Button,
   Text,
-  TextInput,
 } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
