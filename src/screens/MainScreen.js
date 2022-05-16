@@ -1,8 +1,28 @@
 import React from "react";
-import { TouchableWithoutFeedback, View, Text } from "react-native";
+import {
+  View,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Button,
+  Text,
+  TextInput,
+} from "react-native";
 import { Octicons } from "@expo/vector-icons";
+import { useForm, Controller } from "react-hook-form";
 
 const MainScreen = ({ navigation }) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      trelloBoard: "",
+    },
+  });
+
+  const onSubmit = (data) => console.log(data);
+
   return (
     <View
       style={{
@@ -11,18 +31,29 @@ const MainScreen = ({ navigation }) => {
         alignItems: "center",
       }}
     >
-      <View
-        style={{
-          padding: 20,
-          width: "100%",
-          borderRadius: 10,
-          borderWidth: 1,
-          borderColor: "#e1e1e1",
-          backgroundColor: "white",
-        }}
-      >
-        <Text>Main</Text>
-        <Octicons name="sync" size={28} color="black" />
+      {/* Trello Settings Card */}
+      <View style={styles.cardWrapper}>
+        <Text style={styles.cardTitle}>Trello Settings</Text>
+        <View style={styles.cardBody}>
+          <Octicons name="sync" size={28} color="black" />
+        </View>
+      </View>
+
+      {/* Sync Settings Card */}
+      <View style={styles.cardWrapper}>
+        <Text style={styles.cardTitle}>Sync Settings</Text>
+        <View style={styles.cardBody}>
+          <Octicons name="sync" size={28} color="black" />
+        </View>
+      </View>
+
+      {/* Sync */}
+      <View style={{ paddingTop: 10 }}>
+        <Button
+          title={"Sync Now"}
+          color={"#DB3E00"}
+          onPress={handleSubmit(onSubmit)}
+        />
       </View>
 
       {/* Footer */}
@@ -63,5 +94,26 @@ const MainScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  cardWrapper: {
+    marginVertical: 5,
+    width: "100%",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#e1e1e1",
+    backgroundColor: "white",
+    overflow: "hidden",
+  },
+  cardTitle: {
+    padding: 10,
+    backgroundColor: "#d7d7d7",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  cardBody: {
+    padding: 10,
+  },
+});
 
 export default MainScreen;

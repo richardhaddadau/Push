@@ -5,8 +5,8 @@ import { Octicons } from "@expo/vector-icons";
 const StepsScreen = () => {
   // State
   const [stepOneDone, setStepOneDone] = useState(true);
-  const [stepTwoDone, setStepTwoDone] = useState(false);
-  const [stepThreeDone, setStepThreeDone] = useState(false);
+  const [stepTwoDone, setStepTwoDone] = useState(true);
+  const [stepThreeDone, setStepThreeDone] = useState(true);
 
   return (
     <View
@@ -46,7 +46,7 @@ const StepsScreen = () => {
           <Octicons
             name="issue-closed"
             size={28}
-            color="black"
+            color="green"
             style={styles.setupIcon}
           />
         ) : (

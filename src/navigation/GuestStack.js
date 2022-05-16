@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 const GuestStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      {/*<Stack.Screen name="Welcome" component={WelcomeScreen} />*/}
       <Stack.Screen name="Setup" component={StepsScreen} />
       <Stack.Screen name="Choose Store" component={StoreChoiceScreen} />
       <Stack.Screen name="Store Login" component={StoreLoginScreen} />
