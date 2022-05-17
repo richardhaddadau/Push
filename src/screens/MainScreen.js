@@ -84,6 +84,31 @@ const MainScreen = ({ navigation }) => {
                 { label: "From Order Number", value: "fromOrderNumber" },
               ]}
             />
+
+            {/* Beginning of Time Settings */}
+            {syncFrom === null ? null : syncFrom ===
+              "beginningOfTime" ? null : (
+              <View
+                style={{
+                  paddingTop: 10,
+                  borderTopWidth: 1,
+                  borderColor: "#e1e1e1",
+                }}
+              >
+                <Text style={styles.optionHeading}>
+                  Choose a store order to sync from:
+                </Text>
+                <RNPickerSelect
+                  placeholder={{ label: "Choose a store order..", value: null }}
+                  onValueChange={(value) => setTrelloList(value)}
+                  items={[
+                    { label: "First Item", value: "1" },
+                    { label: "Second Item", value: "2" },
+                    { label: "Third Item", value: "3" },
+                  ]}
+                />
+              </View>
+            )}
           </View>
         </View>
       )}
