@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Button,
   Text,
-  TextInput,
 } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
@@ -180,6 +179,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   optionHeading: {
+    marginBottom: 10,
     fontSize: 14,
     color: "#a7a7a7",
   },
