@@ -14,6 +14,8 @@ const MainScreen = ({ navigation }) => {
   const [trelloBoard, setTrelloBoard] = useState(null);
   const [trelloList, setTrelloList] = useState(null);
   const [syncFrom, setSyncFrom] = useState(null);
+  const [syncFromOrder, setSyncFromOrder] = useState(0);
+  const [readyToSync, setReadyToSync] = useState(false);
 
   return (
     <View
@@ -77,7 +79,15 @@ const MainScreen = ({ navigation }) => {
             </Text>
             <RNPickerSelect
               placeholder={{ label: "Choose option..", value: null }}
-              onValueChange={(value) => setSyncFrom(value)}
+              onValueChange={(value) => {
+                setSyncFrom(value);
+
+                if (value === "beginningOfTime") {
+                  setReadyToSync(true);
+                } else {
+                  setReadyToSync(false);
+                }
+              }}
               items={[
                 { label: "Beginning of Time", value: "beginningOfTime" },
                 { label: "From Order Number", value: "fromOrderNumber" },
@@ -99,7 +109,15 @@ const MainScreen = ({ navigation }) => {
                 </Text>
                 <RNPickerSelect
                   placeholder={{ label: "Choose a store order..", value: null }}
-                  onValueChange={(value) => setTrelloList(value)}
+                  onValueChange={(value) => {
+                    setSyncFromOrder(value);
+
+                    if (value === null) {
+                      setReadyToSync(false);
+                    } else {
+                      setReadyToSync(true);
+                    }
+                  }}
                   items={[
                     { label: "First Item", value: "1" },
                     { label: "Second Item", value: "2" },
@@ -113,11 +131,11 @@ const MainScreen = ({ navigation }) => {
       )}
 
       {/* Sync */}
-      {syncFrom === null ? null : (
+      {readyToSync ? (
         <View style={{ paddingTop: 10 }}>
           <Button title={"Sync Now"} color={"#DB3E00"} />
         </View>
-      )}
+      ) : null}
 
       {/* Footer */}
       <View
